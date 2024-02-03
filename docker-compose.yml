@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: wallet_api_web
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    entrypoint:
+      ./entrypoint.sh
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./wallet_api:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  db:
+    image: mysql:8.3
+    container_name: wallet_api_db
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql/:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1
+      start_period: 2s
+      interval: 3s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+
