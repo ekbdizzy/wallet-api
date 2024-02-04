@@ -1,3 +1,4 @@
+import django_filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,11 +8,25 @@ from wallets.models import Transaction
 from wallets.v1.transactions.serializers import TransactionSerializer
 
 
+class TransactionFilter(django_filters.FilterSet):
+    class Meta:
+        model = Transaction
+        fields = {
+            'wallet_id': ['exact'],
+            'is_inbound': ['exact'],
+            'created_at': ['exact', 'gte', 'lte']
+        }
+        
+        
 class TransactionListCreateView(APIView, JsonApiPageNumberPagination):
+    
+    filterset_class = TransactionFilter
 
     def get(self, request):
-        transactions = Transaction.objects.all()
-        transactions = self.paginate_queryset(transactions, request)
+        queryset = Transaction.objects.all()
+        filtered_queryset = TransactionFilter(request.GET, queryset=queryset).qs
+        
+        transactions = self.paginate_queryset(filtered_queryset, request)
         serializer = TransactionSerializer(transactions, many=True)
         return self.get_paginated_response(serializer.data)
 
