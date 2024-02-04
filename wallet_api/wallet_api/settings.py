@@ -14,6 +14,8 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default="localhost")
 
+LOG_DIR = BASE_DIR / "logs"
+Path(LOG_DIR).mkdir(parents=True, exist_ok=True)
 
 # Application definition
 
@@ -105,6 +107,44 @@ DATABASES = {
         "PORT": env.str("MYSQL_PORT"),
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        },
+    },
+    "handlers": {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': Path(LOG_DIR) / 'transactions.log',
+            'formatter': 'verbose',
+            'mode': 'a',
+        }
+    },
+    "loggers": {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'formatter': 'verbose',
+            'propagate': True
+        },
+        'transactions_logger': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'formatter': 'verbose',
+            'propagate': False
+        }
+    },
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

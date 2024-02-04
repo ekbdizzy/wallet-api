@@ -10,6 +10,11 @@ from rest_framework_json_api.pagination import JsonApiPageNumberPagination
 from wallets.models import Transaction
 from wallets.v1.transactions.serializers import TransactionSerializer, TransactionQuerySerializer
 
+import logging
+
+logger = logging.getLogger("transactions")
+tx_logger = logging.getLogger("transactions_logger")
+
 
 class TransactionFilter(django_filters.FilterSet):
     class Meta:
@@ -29,6 +34,7 @@ class TransactionListCreateView(APIView, JsonApiPageNumberPagination):
                              status.HTTP_200_OK: TransactionSerializer(many=True),
                          }, )
     def get(self, request):
+        
         """Get transactions list."""
         order_by = request.GET.get('order_by', "created_at")
         for order in order_by.split(","):        
