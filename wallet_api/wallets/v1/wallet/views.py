@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_json_api.pagination import JsonApiPageNumberPagination
 
-
 from wallets.models import Wallet
 from wallets.v1.wallet.serializers import WalletSerializer
 
@@ -19,7 +18,11 @@ class WalletFilter(django_filters.FilterSet):
 class WalletListCreateView(APIView, JsonApiPageNumberPagination):
 
     def get(self, request):
-        queryset = Wallet.objects.all()
+        
+        order_by = request.GET.get('order_by', "created_at")
+        for order in order_by.split(","):        
+            queryset = Wallet.objects.order_by(order)
+         
         filtered_queryset = WalletFilter(request.GET, queryset).qs
         
         wallets = self.paginate_queryset(filtered_queryset, request)

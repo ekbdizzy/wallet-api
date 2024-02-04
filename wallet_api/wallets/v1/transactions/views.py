@@ -23,7 +23,11 @@ class TransactionListCreateView(APIView, JsonApiPageNumberPagination):
     filterset_class = TransactionFilter
 
     def get(self, request):
-        queryset = Transaction.objects.all()
+        
+        order_by = request.GET.get('order_by', "created_at")
+        for order in order_by.split(","):        
+            queryset = Transaction.objects.order_by(order)
+        
         filtered_queryset = TransactionFilter(request.GET, queryset=queryset).qs
         
         transactions = self.paginate_queryset(filtered_queryset, request)
