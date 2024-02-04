@@ -11,3 +11,10 @@ class WalletSerializer(serializers.ModelSerializer):
             "label",
             "balance",
         )
+
+
+class WalletQuerySerializer(serializers.Serializer):
+    
+    label__icontains = serializers.CharField(required=False)
+    order_by = serializers.CharField(required=False)
+    
