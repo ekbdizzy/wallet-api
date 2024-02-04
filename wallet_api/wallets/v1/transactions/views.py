@@ -57,3 +57,4 @@ class TransactionDetailView(APIView):
         transaction = get_object_or_404(Transaction, pk=transaction_id)
         serializer = TransactionSerializer(transaction)
         return Response(serializer.data)
+    
