@@ -1,5 +1,8 @@
 alembic==1.13.1
-Django==4.2
 gunicorn==21.2.0
+Django==4.2
+djangorestframework==3.14.0
+djangorestframework-jsonapi==6.1.0
+django-filter==23.5
 environs==10.3.0
 mysqlclient==2.2.1
