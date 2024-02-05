@@ -1,4 +1,4 @@
 #!/bin/bash
 
 python manage.py migrate --noinput
-gunicorn --bind ":8000" wallet_api.wsgi:application
+python manage.py runserver 0.0.0.0:8000
