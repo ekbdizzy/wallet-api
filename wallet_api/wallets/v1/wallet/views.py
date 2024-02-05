@@ -55,7 +55,6 @@ class WalletListCreateView(APIView, JsonApiPageNumberPagination):
                          )
     def post(self, request):
         """Create wallet."""
-        logger.debug("WalletCreateView")
         serializer = WalletSerializer(data=request.data)
         if serializer.is_valid():
             wallet = serializer.create(validated_data=serializer.validated_data)

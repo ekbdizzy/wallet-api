@@ -1,25 +1,19 @@
+from decimal import Decimal
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from wallets.models import Wallet, Transaction
+from wallets.models import Wallet
 from wallets.v1.wallet.serializers import WalletSerializer
 
 
 class WalletAPITestCase(APITestCase):
     def setUp(self):
         
-        self.wallet_1 = Wallet.objects.create(label="Label 1", balance='100.00')
-        self.wallet_2 = Wallet.objects.create(label="Label 2", balance='50.00')
-        self.wallet_3 = Wallet.objects.create(label="Label 3", balance='-10.00')
-        
-        self.transaction_1_1 = Transaction.objects.create(wallet=self.wallet_1)
-        self.transaction_1_2 = Transaction.objects.create(wallet=self.wallet_1)
-        self.transaction_1_3 = Transaction.objects.create(wallet=self.wallet_1)
-
-        self.transaction_2_1 = Transaction.objects.create(wallet=self.wallet_2)
-        self.transaction_2_2 = Transaction.objects.create(wallet=self.wallet_2)
-        self.transaction_2_3 = Transaction.objects.create(wallet=self.wallet_2)
+        self.wallet_1 = Wallet.objects.create(label="Label 1", balance=Decimal('100.00'))
+        self.wallet_2 = Wallet.objects.create(label="Label 2", balance=Decimal('50.00'))
+        self.wallet_3 = Wallet.objects.create(label="Label 3", balance=Decimal('-10.00'))
         
         self.url_list = reverse("wallets:v1:wallets-list")
         self.url_detail = reverse("wallets:v1:wallets-detail", kwargs={"wallet_id": 1})
