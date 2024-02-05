@@ -6,9 +6,9 @@ API specification – <strong>JSON:API</strong>.
 - [x] Pagination
 - [x] Sorting
 - [x] Filtering
-- [x] Test coverage;
-- [x] SQLAlchemy migrations;
-- [x] DB transactions.
+- [x] Test coverage
+- [x] SQLAlchemy migrations
+- [x] DB transactions
 ---
 
 ## How to start
@@ -19,14 +19,14 @@ make run
 ```
 After `make run` command server will start working on http://localhost:8000
 
-### Other commands:
+### Other make commands:
 * `make copy_env`:  copy env.sample to .env
-* `start`: build and start server
-* `stop`:  stop server
-* `restart`: restart server
-* `migrate`: upgrade alembic migrations
-* `downgrade`: downgrade alembic migrations
-* `test`: run tests on dockerized server
+* `make start`: build and start server
+* `make stop`:  stop server
+* `make restart`: restart server
+* `make migrate`: upgrade alembic migrations
+* `make downgrade`: downgrade alembic migrations
+* `make test`: run tests on dockerized server
 
 ---
 
