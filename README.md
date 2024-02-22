@@ -1,6 +1,6 @@
 ## Wallet API
 
-REST API server using django-rest-framework with pagination, sorting and filtering.<br>
+REST API application using django-rest-framework with pagination, sorting and filtering.<br>
 API specification – <strong>JSON:API</strong>.
 
 - [x] Pagination
